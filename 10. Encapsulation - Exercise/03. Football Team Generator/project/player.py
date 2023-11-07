@@ -7,12 +7,8 @@ class Player:
         self.__shooting = shooting
 
     @property
-    def __name(self):
+    def name(self):
         return self.name
-
-    @__name.setter
-    def __name(self, value):
-        self.name = value
 
     def __str__(self):
         return (f"Player: {self.name}\n"

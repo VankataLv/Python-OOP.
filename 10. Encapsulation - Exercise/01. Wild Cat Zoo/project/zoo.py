@@ -72,7 +72,7 @@ class Zoo:
             elif animal.__class__.__name__ == "Cheetah":
                 sorted_animals_by_type["Cheetah"].append(animal)
         output = ""
-        output += f"You have {len(self.animals)} animals \n"
+        output += f"You have {len(self.animals)} animals\n"
         output += f"----- {len(sorted_animals_by_type['Lion'])} Lions:\n"
         for lion in sorted_animals_by_type['Lion']:
             output += f"{lion}\n"
@@ -82,7 +82,7 @@ class Zoo:
         output += f"----- {len(sorted_animals_by_type['Cheetah'])} Cheetahs:\n"
         for cheetah in sorted_animals_by_type['Cheetah']:
             output += f"{cheetah}\n"
-        return output
+        return output.rstrip()
 
     def workers_status(self):
         sorted_worker_by_type = {"Keeper": [], "Caretaker": [], "Vet": []}
@@ -94,7 +94,7 @@ class Zoo:
             elif worker.__class__.__name__ == "Vet":
                 sorted_worker_by_type["Vet"].append(worker)
         output = ""
-        output += f"You have {len(self.workers)} workers \n"
+        output += f"You have {len(self.workers)} workers\n"
         output += f"----- {len(sorted_worker_by_type['Keeper'])} Keepers:\n"
         for keeper in sorted_worker_by_type['Keeper']:
             output += f"{keeper}\n"
@@ -104,4 +104,4 @@ class Zoo:
         output += f"----- {len(sorted_worker_by_type['Vet'])} Vets:\n"
         for vet in sorted_worker_by_type['Vet']:
             output += f"{vet}\n"
-        return output
+        return output.rstrip()
