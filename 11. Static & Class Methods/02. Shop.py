@@ -6,7 +6,7 @@ class Shop:
         self.name = name
         self.type = type
         self.capacity = capacity
-        self.items: Dict[str, int] = {}  # stores name of the item : qty
+        self.items: Dict[str, int] = {}  # stores name of the idx : qty
 
     @classmethod
     def small_shop(cls, name: str, type: str):
