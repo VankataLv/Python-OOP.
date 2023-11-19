@@ -4,7 +4,7 @@ from functools import reduce
 class Calculator:
     @staticmethod
     def add(*args):
-        return reduce(lambda x, y: x + y, args)  # за x и y, приложи +, от iterable (може да 0, 1 или много аргументи)
+        return reduce(lambda x, y: x + y, args)  # за x и y, приложи +, от iterable_obj (може да 0, 1 или много аргументи)
     @staticmethod
     def multiply(*args):
         return reduce(lambda x, y: x * y, args)
