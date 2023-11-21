@@ -14,6 +14,7 @@ def solution():
     def take(n, num):
         return [next(num) for _ in range(n)]
 
-    return (take, halves, integers)
+    return take, halves, integers
+
 
 

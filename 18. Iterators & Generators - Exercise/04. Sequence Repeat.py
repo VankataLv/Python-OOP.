@@ -1,6 +1,6 @@
 class sequence_repeat:
-    def __init__(self, sting_to_repeat: str, times_to_repeat: int):
-        self.sting_to_repeat = sting_to_repeat
+    def __init__(self, string_to_repeat: str, times_to_repeat: int):
+        self.string_to_repeat = string_to_repeat
         self.times_to_repeat = times_to_repeat
         self.iterations = 0
 
@@ -10,6 +10,7 @@ class sequence_repeat:
     def __next__(self):
         if self.iterations == self.times_to_repeat:
             raise StopIteration()
-        index = self.sting_to_repeat[self.iterations % len(self.sting_to_repeat)]
+        index = self.string_to_repeat[self.iterations % len(self.string_to_repeat)]
         self.iterations += 1
         return index
+

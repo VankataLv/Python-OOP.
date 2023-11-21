@@ -2,7 +2,6 @@ def fibonacci():
     cur_num = 1
     last_num = 0
 
-
     yield last_num
     yield cur_num
 
