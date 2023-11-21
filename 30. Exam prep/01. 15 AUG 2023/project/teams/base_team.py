@@ -1,5 +1,5 @@
-import math
 from abc import ABC, abstractmethod
+from math import floor
 
 
 class BaseTeam(ABC):
@@ -8,7 +8,7 @@ class BaseTeam(ABC):
         self.country = country
         self.advantage = advantage
         self.budget = budget
-        self.wins = 0
+        self.wins: int = 0
         self.equipment: list = []
 
     @property
@@ -19,6 +19,7 @@ class BaseTeam(ABC):
     def name(self, value):
         if not value.strip():
             raise ValueError("Team name cannot be empty!")
+
         self.__name = value
 
     @property
@@ -29,6 +30,7 @@ class BaseTeam(ABC):
     def country(self, value):
         if len(value.strip()) < 2:
             raise ValueError("Team country should be at least 2 symbols long!")
+
         self.__country = value
 
     @property
@@ -39,6 +41,7 @@ class BaseTeam(ABC):
     def advantage(self, value):
         if value <= 0:
             raise ValueError("Advantage must be greater than zero!")
+
         self.__advantage = value
 
     @abstractmethod
@@ -46,14 +49,20 @@ class BaseTeam(ABC):
         pass
 
     def get_statistics(self):
-        total_price_of_team_equipment = sum([e.price for e in self.equipment])
+        total_price_of_team_equipment = 0
         avg_team_protection = 0
-        if self.equipment:
-            avg_team_protection = sum([e.protection for e in self.equipment]) / len(self.equipment)
+
+        for equipment_piece in self.equipment:
+            total_price_of_team_equipment += equipment_piece.price
+            avg_team_protection += equipment_piece.protection
+
+        if len(self.equipment) != 0:
+            avg_team_protection /= len(self.equipment)
+
         return f"""Name: {self.name}
 Country: {self.country}
 Advantage: {self.advantage} points
 Budget: {self.budget:.2f}EUR
 Wins: {self.wins}
 Total Equipment Price: {total_price_of_team_equipment:.2f}
-Average Protection: {math.floor(avg_team_protection)}\n"""
+Average Protection: {int(avg_team_protection)}"""
