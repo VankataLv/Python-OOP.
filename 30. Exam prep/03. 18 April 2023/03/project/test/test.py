@@ -1,79 +1,78 @@
-from project.robot import Robot
+from project.tennis_player import TennisPlayer
 from unittest import TestCase, main
 
 
-class TestRobot(TestCase):
+class TestsTennisPlayer(TestCase):
     def setUp(self) -> None:
-        self.robot1 = Robot("1", "Military", 10, 100.00)
-        self.robot2 = Robot("2", "Military", 10, 50.00)
-        self.robot3 = Robot("3", "Military", 10, 100.00)
-        self.robot4 = Robot("4", "Military", 10, 200.00)
+        self.player = TennisPlayer("Ivan", 21, 10.0)
+        self.player2 = TennisPlayer("Petar", 21, 55.0)
+        self.player3 = TennisPlayer("Vlado", 21, 5.0)
 
     def test_constructor(self):
-        self.assertEqual(self.robot1.robot_id, "1")
-        self.assertEqual(self.robot1.category, "Military")
-        self.assertEqual(self.robot1.available_capacity, 10)
-        self.assertEqual(self.robot1.price, 100.00)
-        self.assertEqual(self.robot1.hardware_upgrades, [])
-        self.assertEqual(self.robot1.software_updates, [])
+        self.player = TennisPlayer("Ivan", 21, 10.0)
+        self.assertEqual(self.player.name, "Ivan")
+        self.assertEqual(self.player.age, 21)
+        self.assertEqual(self.player.points, 10.0)
+        self.assertEqual(self.player.wins, [])
 
-    def test_category_setter_bad_data(self):
+    def test_name_setter_bad(self):
         with self.assertRaises(ValueError) as ve:
-            self.robot1.category = "Unknown Category"
-        self.assertEqual(f"Category should be one of '{self.robot1.ALLOWED_CATEGORIES}'", str(ve.exception))
+            self.player.name = "a"
+        self.assertEqual("Name should be more than 2 symbols!", str(ve.exception))
 
-    def test_price_setter_bad_data(self):
+    def test_age_setter_bad(self):
         with self.assertRaises(ValueError) as ve:
-            self.robot1.price = -999
-        self.assertEqual("Price cannot be negative!", str(ve.exception))
+            self.player.age = 15
+        self.assertEqual("Players must be at least 18 years of age!", str(ve.exception))
 
-    def test_upgrade_method_already_existing_component(self):
-        self.robot1.hardware_upgrades.append("missile")
-        result = self.robot1.upgrade("missile", 50.0)
-        expected_result = f"Robot 1 was not upgraded."
+    def test_add_new_win_with_new_win(self):
+        self.player.add_new_win("Sofia")
+        self.assertEqual(self.player.wins, ["Sofia"])
+
+    def test_add_new_win_with_existing_win(self):
+        self.player.wins = ["Plovdiv", "Sofia"]
+        result = self.player.add_new_win("Plovdiv")
+        expected_result = f"Plovdiv has been already added to the list of wins!"
         self.assertEqual(result, expected_result)
 
-    def test_upgrade_method_new_component(self):
-        result = self.robot1.upgrade("canon", 50.0)
-        expected_result = 'Robot 1 was upgraded with canon.'
-        self.assertEqual(result, expected_result)
-        self.assertEqual(self.robot1.hardware_upgrades, ["canon"])
-        self.assertEqual(self.robot1.price, 175.00)
-
-    def test_cannot_update_already_higher_version(self):
-        self.robot1.software_updates.append(2.0)
-        result1 = self.robot1.update(1.0, 1)
-        expected_result1 = "Robot 1 was not updated."
-        self.assertEqual(result1, expected_result1)
-
-    def test_cannot_update_no_capacity(self):
-        self.robot1.available_capacity = 2
-        result1 = self.robot1.update(5.0, 10)
-        expected_result1 = "Robot 1 was not updated."
-        self.assertEqual(result1, expected_result1)
-
-    def test_good_update(self):
-        result = self.robot1.update(1.1, 1)
-        self.assertEqual(self.robot1.software_updates, [1.1])
-        self.assertEqual(self.robot1.available_capacity, 9)
-        expected_result = 'Robot 1 was updated to version 1.1.'
+    def test_lt_method_other_better(self):
+        result = self.player.__lt__(self.player2)
+        expected_result = 'Petar is a top seeded player and he/she is better than Ivan'
         self.assertEqual(result, expected_result)
 
-    def test_greater_than(self):
-        expected_result = 'Robot with ID 1 is more expensive than Robot with ID 2.'
-        result = self.robot1.__gt__(self.robot2)
+    def test_lt_method_other_worse(self):
+        result = self.player.__lt__(self.player3)
+        expected_result = 'Ivan is a better player than Vlado'
         self.assertEqual(result, expected_result)
 
-    def test_equals(self):
-        expected_result = 'Robot with ID 1 costs equal to Robot with ID 3.'
-        result = self.robot1.__gt__(self.robot3)
+    def test_str_wins_one(self):
+        self.player.add_new_win("Sofia")
+        expected_result = f"Tennis Player: Ivan\n" \
+                          f"Age: 21\n" \
+                          f"Points: 10.0\n" \
+                          f"Tournaments won: Sofia"
+        result = self.player.__str__()
         self.assertEqual(result, expected_result)
 
-    def test_less(self):
-        expected_result = 'Robot with ID 1 is cheaper than Robot with ID 4.'
-        result = self.robot1.__gt__(self.robot4)
-        self.assertEqual(result, expected_result)
+    def test_str_no_wins(self):
+        expected_result3 = f"Tennis Player: Vlado\n" \
+                           f"Age: 21\n" \
+                           f"Points: 5.0\n" \
+                           f"Tournaments won: "
+        result3 = self.player3.__str__()
+        self.assertEqual(result3, expected_result3)
 
-        
+    def test_str_with_wins_two(self):
+        self.player3.add_new_win("Sofia")
+        self.player3.add_new_win("Varna")
+
+        expected_result3 = f"Tennis Player: Vlado\n" \
+                           f"Age: 21\n" \
+                           f"Points: 5.0\n" \
+                           f"Tournaments won: Sofia, Varna"
+        result3 = self.player3.__str__()
+        self.assertEqual(result3, expected_result3)
+
+
 if __name__ == "__main__":
     main()
