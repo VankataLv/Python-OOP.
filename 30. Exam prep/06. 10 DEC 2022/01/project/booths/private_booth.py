@@ -2,12 +2,11 @@ from project.booths.booth import Booth
 
 
 class PrivateBooth(Booth):
-    # TYPE_OF_BOOTH = "PrivateBooth"
-    PRICE_PER_PERSON = 3.50
+    PRICE_FOR_RESERVATION_PRIVATE_BOOTH = 3.50
 
     def __init__(self, booth_number: int, capacity: int):
         super().__init__(booth_number, capacity)
 
     def reserve(self, number_of_people: int):
-        self.price_for_reservation = (self.PRICE_PER_PERSON * number_of_people)
-        self.is_reserved: bool = True
+        self.price_for_reservation = (self.PRICE_FOR_RESERVATION_PRIVATE_BOOTH * number_of_people)
+        self.is_reserved = True
