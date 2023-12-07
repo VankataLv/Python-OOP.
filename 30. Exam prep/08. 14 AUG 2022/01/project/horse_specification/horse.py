@@ -3,12 +3,15 @@ from abc import ABC, abstractmethod
 
 class Horse(ABC):
     MAX_SPEED = None
-    STRING_HORSE_TYPE = None
 
     def __init__(self, name: str, speed: int):
-        self.name = name
-        self.speed = speed
-        self.is_taken = False
+        self.name: str = name
+        self.speed: int = speed
+        self.is_taken: bool = False
+
+    @abstractmethod
+    def train(self):
+        pass
 
     @property
     def name(self):
@@ -16,8 +19,8 @@ class Horse(ABC):
 
     @name.setter
     def name(self, value):
-        if len(value) < 4:
-            return ValueError(f"Horse name {value} is less than 4 symbols!")
+        if len(value.strip()) < 4:
+            raise ValueError(f"Horse name {value} is less than 4 symbols!")
         self.__name = value
 
     @property
@@ -27,9 +30,5 @@ class Horse(ABC):
     @speed.setter
     def speed(self, value):
         if value > self.MAX_SPEED:
-            return ValueError("Horse speed is too high!")
+            raise ValueError("Horse speed is too high!")
         self.__speed = value
-
-    @abstractmethod
-    def train(self):
-        pass

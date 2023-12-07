@@ -2,10 +2,8 @@ from project.jockey import Jockey
 
 
 class HorseRace:
-    VALID_HORSE_RACES = ("Winter", "Spring", "Autumn", "Summer")
-
-    def __init__(self, race_type):
-        self.race_type = race_type
+    def __init__(self, race_type: str):
+        self.race_type: str = race_type
         self.jockeys: list[Jockey] = []
 
     @property
@@ -14,6 +12,6 @@ class HorseRace:
 
     @race_type.setter
     def race_type(self, value):
-        if value not in self.VALID_HORSE_RACES:
+        if value not in ("Winter", "Spring", "Autumn", "Summer"):
             raise ValueError("Race type does not exist!")
         self.__race_type = value
